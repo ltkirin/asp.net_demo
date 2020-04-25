@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29920.165
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspDemo.Web", "AspDemo.Web\AspDemo.Web.csproj", "{9581D65F-01AE-46F7-B06A-A1D7F78972AD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspDemo.DomainModel", "AspDemo.DomainModel\AspDemo.DomainModel.csproj", "{637CF300-31E4-46AA-BF84-EC9CA94094DE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9581D65F-01AE-46F7-B06A-A1D7F78972AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9581D65F-01AE-46F7-B06A-A1D7F78972AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9581D65F-01AE-46F7-B06A-A1D7F78972AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9581D65F-01AE-46F7-B06A-A1D7F78972AD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{637CF300-31E4-46AA-BF84-EC9CA94094DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{637CF300-31E4-46AA-BF84-EC9CA94094DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{637CF300-31E4-46AA-BF84-EC9CA94094DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{637CF300-31E4-46AA-BF84-EC9CA94094DE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {CE1E4DC8-DEF9-4CCD-B849-5866D965CC24}
+	EndGlobalSection
+EndGlobal

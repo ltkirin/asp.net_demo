@@ -58,6 +58,31 @@ namespace AspDemo.DomainModel.service.converter
             return model;
         }
 
+        public FounderPutModel GetPutModel(Founder founder, IList<Company> companies)
+        {
+            return new FounderPutModel()
+            {
+                Id = founder.Id,
+                FirstName = founder.FirstName,
+                LastName = founder.LastName,
+                MiddleName = founder.MiddleName ?? string.Empty,
+                Tin = founder.Tin,
+                Companies = companies.Select(c => GetListItemModel(c)).ToList()
+            };
+        }
+
+        public CompanyPutModel GetPutModel(Company company, IList<Founder> founders)
+        {
+            return new CompanyPutModel()
+            {
+                Id = company.Id,
+                Title = company.Title,
+                Tin = company.Tin,
+                CompanyType = (int)company.Type,
+                Founders = founders.Select(c => GetListItemModel(c)).ToList()
+            };
+        }
+
         public FounderDto GetDto(FounderPutModel model)
         {
             return new FounderDto()
@@ -67,7 +92,7 @@ namespace AspDemo.DomainModel.service.converter
                 LastName = model.LastName,
                 MiddleName = model.MiddleName ?? string.Empty,
                 Tin = model.Tin,
-                RelatedCompaniesIds = model.CompaniesIds.ToArray()
+                RelatedCompaniesIds = model.Companies.Select(i => i.Id ).ToArray()
             };
         }
 
@@ -90,7 +115,7 @@ namespace AspDemo.DomainModel.service.converter
                 Tin = model.Tin,
                 Title = model.Title,
                 CompanyType = (CompanyType)model.CompanyType,
-                FoundersIds = model.FoundersIds.ToArray()
+                FoundersIds = model.Founders.Select(i => i.Id).ToArray()
             };
         }
 

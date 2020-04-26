@@ -154,6 +154,28 @@ namespace AspDemo.DomainModel.service
             return response;
         }
 
+        public FounderPutModel GetFounderPutModel(Guid id)
+        {
+            Founder founder = founderService.FindById(id);
+            IList<Company> companies = companyService.Search(
+                new CompanySearchQuery()
+                {
+                    FounderId = founder.Id
+                });
+            return entityConverter.GetPutModel(founder, companies);
+        }
+
+        public CompanyPutModel GetCompanyPutModel(Guid id)
+        {
+            Company company = companyService.FindById(id);
+            IList<Founder> founders = founderService.Search(
+                new FounderSerachQuery()
+                {
+                    RelatedCompanyId = company.Id
+                });
+            return entityConverter.GetPutModel(company, founders);
+        }
+
         public ResponseBase UpdateCompany(CompanyPutModel model)
         {
             companyService.Update(entityConverter.GetDto(model));

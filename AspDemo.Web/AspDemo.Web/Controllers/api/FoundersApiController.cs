@@ -10,9 +10,9 @@ namespace AspDemo.Web.Controllers.api
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class FoundersController : ApiControllerBase
+    public class FoundersApiController : ApiControllerBase
     {
-        public FoundersController(DataManager dataManager) : base(dataManager)
+        public FoundersApiController(DataManager dataManager) : base(dataManager)
         {
         }
 

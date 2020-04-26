@@ -1,5 +1,4 @@
 ﻿using AspDemo.DomainModel.common.model;
-using System;
 using System.Collections.Generic;
 
 namespace AspDemo.DomainModel.company.model
@@ -10,7 +9,7 @@ namespace AspDemo.DomainModel.company.model
 
         public long Tin { get; set; }
 
-        public IList<Guid> FoundersIds { get; set; } = new List<Guid>();
+        public IList<ListItemModel> Founders { get; set; } = new List<ListItemModel>();
 
         public int CompanyType { get; set; }
     }

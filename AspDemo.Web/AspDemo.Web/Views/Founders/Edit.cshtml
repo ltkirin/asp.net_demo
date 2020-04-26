@@ -1,0 +1,77 @@
+﻿@model AspDemo.DomainModel.founder.model.FounderPutModel
+
+@{
+    ViewData["Title"] = "Редактировать";
+}
+
+<h1>Edit</h1>
+
+<h4>Учредитель</h4>
+<hr />
+
+<div class="col-11">
+    <div class="col-md-4">
+        <form asp-action="Update">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Tin" class="control-label">ИНН</label>
+                <input asp-for="Tin" class="form-control" />
+                <span asp-validation-for="Tin" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LastName" class="control-label">Фамилия</label>
+                <input asp-for="LastName" class="form-control" />
+                <span asp-validation-for="LastName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FirstName" class="control-label">Имя</label>
+                <input asp-for="FirstName" class="form-control" />
+                <span asp-validation-for="FirstName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MiddleName" class="control-label">Отчество</label>
+                <input asp-for="MiddleName" class="form-control" />
+                <span asp-validation-for="MiddleName" class="text-danger"></span>
+                <div class="list-group">
+                </div>
+                <div class="form-group" hidden="hidden">
+                    <label asp-for="Id" class="control-label"></label>
+                    <input asp-for="Id" class="form-control" />
+                    <span asp-validation-for="Id" class="text-danger"></span>
+                    <div class="list-group">
+                    </div>
+                </div>
+                <ul>
+                    @foreach (var item in Model.Companies)
+                    {
+                        <li id="@item.Id">
+                            <label>
+                                @item.Value
+                            </label>
+                        </li>
+                    }
+                </ul>
+                <div class="form-group">
+                    <input type="submit" value="Сохранить" class="btn btn-primary" />
+                </div>
+
+        </form>
+    </div>
+</div>
+
+<div class="col-md-4">
+
+    <form asp-action="Delete">
+        <input asp-for="Id" class="form-control" hidden="hidden" />
+        <button type="submit" class="btn btn-danger" value="Delete">Удалить</button>
+    </form>
+
+    <div>
+        <form asp-action="Index">
+            <input type="submit" value="Назад" class="btn btn-primary" />
+        </form>
+    </div>
+</div>
+
+
+

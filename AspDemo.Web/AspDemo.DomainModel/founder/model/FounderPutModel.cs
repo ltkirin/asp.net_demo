@@ -13,6 +13,6 @@ namespace AspDemo.DomainModel.founder.model
         public string FirstName { get; set; }
         public string MiddleName { get; set; }
 
-        public IList<Guid> CompaniesIds { get; set; } = new List<Guid>();
+        public List<ListItemModel> Companies { get; set; } = new List<ListItemModel>();
     }
 }

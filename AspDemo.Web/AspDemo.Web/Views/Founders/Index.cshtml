@@ -1,0 +1,20 @@
+﻿@model List<AspDemo.DomainModel.common.model.ListItemModel>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h3>Учредители</h3>
+<div>
+    <input type="button" value="Создать" onclick="@("window.location.href='" + @Url.Action("NewFounder", "/Founders") + "'");" />
+</div>
+<div>
+    <lu>
+        @foreach (AspDemo.DomainModel.common.model.ListItemModel item in Model)
+        {
+            <li>
+                <a href="/Founders/Edit/@item.Id">@item.Value</a>
+            </li>
+        }
+    </lu>
+</div>
+

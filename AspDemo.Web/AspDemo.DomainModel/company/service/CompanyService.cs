@@ -15,20 +15,22 @@ namespace AspDemo.DomainModel.company.service
 {
     public class CompanyService : ServiceBase, IEntityService<Company>
     {
+        public CompanyService(CompanyDbContext context) : base(context)
+        {
+        }
+
         public void Create(DtoBase<Company> command)
         {
-            CompanyDbContext context = new CompanyDbContext();
             CompanyDto dto = command as CompanyDto;
             Company company = new Company();
             UpdateCompanyInfo(company, dto);
-            PerformCreate(company, context);
+            PerformCreate(company);
             context.SaveChanges();
         }
 
         public void Delete(Guid id)
         {
-            CompanyDbContext context = new CompanyDbContext();
-            Company company = GetById<Company>(id, context);
+            Company company = GetById<Company>(id);
             PerformDelete(company);
             IEnumerable<FounderToCompany> relations =
                 context
@@ -47,22 +49,20 @@ namespace AspDemo.DomainModel.company.service
             return GetById<Company>(id);
         }
 
-        public IList<Company> GetAll(bool deleted)
+        public IList<Company> GetAll(bool deleted, int pageNumber, int pageSize)
         {
-            return PerformGetAll<Company>(deleted);
+            return PerformGetAll<Company>(deleted, pageNumber, pageSize);
         }
 
         public void Restore(Guid id)
         {
-            CompanyDbContext context = new CompanyDbContext();
-            Company company = GetById<Company>(id, context);
+            Company company = GetById<Company>(id);
             PerformRestore(company);
             context.SaveChanges();
         }
 
         public IList<Company> Search(SearchQueryBase<Company> searchQuery)
         {
-            CompanyDbContext context = new CompanyDbContext();
             CompanySearchQuery query = searchQuery as CompanySearchQuery;
             IQueryable<Company> result;
             if(query.Tin != null)
@@ -106,7 +106,6 @@ namespace AspDemo.DomainModel.company.service
         public void Update(DtoBase<Company> command)
         {
             CompanyDto dto = command as CompanyDto;
-            CompanyDbContext context = new CompanyDbContext();
             Company company = GetById<Company>(command.Id.Value);
             UpdateCompanyInfo(company, dto);
             PerformUpdate(company);
@@ -126,8 +125,8 @@ namespace AspDemo.DomainModel.company.service
             {
                 if (!exitingRelations.Any(r => r.Founder.Id == founderId))
                 {
-                    Founder founder = GetById<Founder>(founderId, context);
-                    PerformCreate(new FounderToCompany() { Founder = founder, Company = company }, context);
+                    Founder founder = GetById<Founder>(founderId);
+                    PerformCreate(new FounderToCompany() { Founder = founder, Company = company });
                 }
             }
 

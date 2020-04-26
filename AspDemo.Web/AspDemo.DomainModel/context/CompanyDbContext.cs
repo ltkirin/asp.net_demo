@@ -5,6 +5,7 @@ using AspDemo.DomainModel.founderToCompany.entity;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace AspDemo.DomainModel.context
@@ -19,24 +20,7 @@ namespace AspDemo.DomainModel.context
 
         public CompanyDbContext(DbContextOptions options) : base(options)
         {
-
-        }
-
-        public CompanyDbContext()
-        {
-        }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-             optionsBuilder.UseSqlServer(GetConfigString());
-        }
-
-        private string GetConfigString()
-        {
-            string filePath = @"..\\..\\..\\..\\db\\db.mdf";
-            return string.Format(@"Data Source=(LocalDB)\MSSQLLocalDB;
-            AttachDbFilename={0};
-            Integrated Security=True", filePath);
+            Database.EnsureCreated();
         }
 
         public DbSet<TEntity> GetDbSet<TEntity>() where TEntity : EntityBase

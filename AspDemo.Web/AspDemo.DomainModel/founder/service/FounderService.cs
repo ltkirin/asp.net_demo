@@ -15,20 +15,22 @@ namespace AspDemo.DomainModel.founder.service
 {
     public class FounderService : ServiceBase, IEntityService<Founder>
     {
+        public FounderService(CompanyDbContext context) : base(context)
+        {
+        }
+
         public void Create(DtoBase<Founder> command)
         {
-            CompanyDbContext context = new CompanyDbContext();
             FounderDto dto = command as FounderDto;
             Founder founder = new Founder();
             UpdateFounderInfo(founder, dto);
-            PerformCreate(founder, context);
+            PerformCreate(founder);
             context.SaveChanges();
         }
 
         public void Delete(Guid id)
         {
-            CompanyDbContext context = new CompanyDbContext();
-            Founder founder = GetById<Founder>(id, context);
+            Founder founder = GetById<Founder>(id);
             PerformDelete(founder);
             IEnumerable<FounderToCompany> relations = 
                 context
@@ -47,27 +49,25 @@ namespace AspDemo.DomainModel.founder.service
             return GetById<Founder>(id);
         }
 
-        public new IList<Founder> GetAll(bool deleted)
+        public new IList<Founder> GetAll(bool deleted, int pageNumber, int pageSize)
         {
-            return PerformGetAll<Founder>(deleted);
+            return PerformGetAll<Founder>(deleted, pageNumber, pageSize);
         }
 
         public void Restore(Guid id)
         {
-            CompanyDbContext context = new CompanyDbContext();
-            Founder founder = GetById<Founder>(id, context);
+            Founder founder = GetById<Founder>(id);
             PerformRestore(founder);
             context.SaveChanges();
         }
 
         public IList<Founder> Search(SearchQueryBase<Founder> searchQuery)
         {
-            CompanyDbContext dbContext = new CompanyDbContext();
             FounderSerachQuery query = searchQuery as FounderSerachQuery;
             IQueryable<Founder> result;
             if(query.Tin != null)
             {
-                result = dbContext
+                result = context
                     .GetDbSet<Founder>()
                     .Where(f => f.Tin == query.Tin.Value);
             }
@@ -75,7 +75,7 @@ namespace AspDemo.DomainModel.founder.service
             {
                 if(query.RelatedCompanyId != null)
                 {
-                    result = dbContext
+                    result = context
                         .GetDbSet<FounderToCompany>()
                         .Where(r => r.Company.Id == query.RelatedCompanyId.Value && !r.IsDeleted)
                         .Select(r => r.Founder)
@@ -83,7 +83,7 @@ namespace AspDemo.DomainModel.founder.service
                 }
                 else
                 {
-                    result = dbContext.Founders.Where(f => !f.IsDeleted);
+                    result = context.Founders.Where(f => !f.IsDeleted);
                 }
 
                 if(!string.IsNullOrEmpty(query.LastName))
@@ -111,7 +111,6 @@ namespace AspDemo.DomainModel.founder.service
         public void Update(DtoBase<Founder> command)
         {
             FounderDto dto = command as FounderDto;
-            CompanyDbContext context = new CompanyDbContext();
             Founder founder = GetById<Founder>(command.Id.Value);
             UpdateFounderInfo(founder, dto);
             PerformUpdate(founder);
@@ -131,8 +130,8 @@ namespace AspDemo.DomainModel.founder.service
             {
                 if (!exitingRelations.Any(r => r.Company.Id == companyId))
                 {
-                    Company company = GetById<Company>(companyId, context);
-                    PerformCreate(new FounderToCompany() { Founder = founder, Company = company }, context);
+                    Company company = GetById<Company>(companyId);
+                    PerformCreate(new FounderToCompany() { Founder = founder, Company = company });
                 }
             }
 

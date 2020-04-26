@@ -6,17 +6,15 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using AspDemo.Web.Models;
+using AspDemo.DomainModel.service;
+using AspDemo.DomainModel.founder.model;
 
 namespace AspDemo.Web.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
-        {
-            _logger = logger;
-        }
+        private readonly ILogger<HomeController> _logger;
 
         public IActionResult Index()
         {

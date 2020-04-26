@@ -1,6 +1,6 @@
 ﻿namespace AspDemo.DomainModel.common.command.response
 {
-    public abstract class ResponseBase
+    public class ResponseBase
     {
         public bool IsSuccess { get; set; } = false;
 

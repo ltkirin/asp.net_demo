@@ -12,7 +12,7 @@ namespace AspDemo.DomainModel.company.model
         [Required]
         public long Tin { get; set; }
 
-        public IList<Guid> FoundersIds { get; set; }
+        public IList<Guid> FoundersIds { get; set; } = new List<Guid>();
         [Required]
         public int CompanyType { get; set; }
     }

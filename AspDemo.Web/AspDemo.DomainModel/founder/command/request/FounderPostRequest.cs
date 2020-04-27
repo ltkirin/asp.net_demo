@@ -4,6 +4,6 @@ namespace AspDemo.DomainModel.founder.command.request
 {
     public class FounderPostRequest
     {
-        public FounderPostModel Model { get; set; }
+        public FounderFullModel Model { get; set; }
     }
 }

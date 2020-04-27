@@ -4,6 +4,6 @@ namespace AspDemo.DomainModel.company.command.request
 {
     public class CompanyPutRequest
     {
-        public CompanyPutModel Model { get; set; }
+        public CompanyFullModel Model { get; set; }
     }
 }

@@ -1,7 +1,7 @@
-﻿@model AspDemo.DomainModel.company.model.CompanyPutModel
+﻿@model AspDemo.DomainModel.company.model.CompanyFullModel
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Редактор компании";
 }
 
 <h4>Редактировать компанию</h4>
@@ -11,51 +11,63 @@
         <form asp-action="Update">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Title" class="control-label">Название</label>
+                <label asp-for="Title" class="control-label font-weight-bold">Название</label>
                 <input asp-for="Title" class="form-control" required="required" />
                 <span asp-validation-for="Title" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Tin" class="control-label">ИНН</label>
+                <label asp-for="Tin" class="control-label font-weight-bold">ИНН</label>
                 <input asp-for="Tin" class="form-control" required="required" />
                 <span asp-validation-for="Tin" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="CompanyType" class="control-label">Тип компании</label>
-                <div class="row">
+                <label asp-for="CompanyType" class="control-label font-weight-bold">Тип компании</label>
+                <div class="form-row ">
                     <input asp-for="CompanyType"
                            type="radio"
-                           value="0">
+                           value="0"
+                           checked="checked">
                     <label class="control-label">Индивидуальный предприниматель</label>
                 </div>
-                <div class="row">
+                <div class="form-row">
                     <input asp-for="CompanyType"
                            type="radio"
                            value="1" />
                     <label class="control-label">Юридическое лицо</label>
                 </div>
             </div>
+
+            <div class="form-group">
+                <label asp-for="FoundersIds" class="control-label font-weight-bold">Учредители</label>
+                <select asp-for="FoundersIds" asp-items="ViewBag.Founders" multiple="multiple" class="custom-select">
+                </select>
+                <span asp-validation-for="FoundersIds" class="text-danger"></span>
+            </div>
+
             <div class="form-group" hidden="hidden">
                 <input asp-for="Id" class="form-control" />
                 <span asp-validation-for="Id" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Сохранить" class="btn btn-primary" />
+                <input type="submit" value="Сохранить" class="btn btn-primary" width="180" />
+            </div>
+        </form>
+
+        <form asp-action="Delete">
+            <div class="form-group">
+                <input asp-for="Id" class="form-control" hidden="hidden" />
+                <button type="submit" class="btn btn-danger" value="Delete">Удалить</button>
+            </div>
+        </form>
+
+        <form asp-action="Index">
+            <div class="form-group">
+                <input type="submit" value="Назад" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
-<div>
-    <form asp-action="Delete">
-        <input asp-for="Id" class="form-control" hidden="hidden" />
-        <button type="submit" class="btn btn-danger" value="Delete">Удалить</button>
-    </form>
 
-    <div>
-        <form asp-action="Index">
-            <input type="submit" value="Назад" class="btn btn-primary" />
-        </form>
-    </div>
-</div>
+
 

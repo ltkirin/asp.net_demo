@@ -5,6 +5,6 @@ namespace AspDemo.DomainModel.company.command.response
 {
     public class CompanyGetResponse : ResponseBase
     {
-        public CompanyGetModel Model { get; set; }
+        public CompanyFullModel Model { get; set; }
     }
 }

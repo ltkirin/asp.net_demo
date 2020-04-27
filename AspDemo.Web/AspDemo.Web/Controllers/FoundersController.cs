@@ -6,12 +6,13 @@ using AspDemo.DomainModel.founder.model;
 using AspDemo.DomainModel.service;
 using AspDemo.Web.common;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace AspDemo.Web.Controllers
 {
     public class FoundersController : BaseController
     {
-        public FoundersController(DataManager dataManager) : base(dataManager)
+        public FoundersController(DataProvider dataManager) : base(dataManager)
         {
         }
 
@@ -20,13 +21,14 @@ namespace AspDemo.Web.Controllers
             return View(dataManager.GetAllFounders(false, 1, 100).Items);
         }
 
-        public IActionResult NewFounder()
+        public IActionResult Add()
         {
+            ViewBag.Companies = new MultiSelectList(dataManager.GetAllCompanies().Items, "Id", "Value");
             return View();
         }
 
         [HttpPost]
-        public IActionResult Create(FounderPostModel model)
+        public IActionResult Create(FounderFullModel model)
         {
             dataManager.CreateFounder(model);
             return Redirect("/Founders");
@@ -35,18 +37,13 @@ namespace AspDemo.Web.Controllers
         [HttpGet]
         public IActionResult Edit(Guid id)
         {
-            FounderPutModel putModel = dataManager.GetFounderPutModel(id);
-            IList<ListItemModel> avalableCompanies =
-                dataManager
-                .GetAllCompanies(false, 1, 100)
-                .Items
-                .Where(i => !putModel.Companies.Contains(i))
-                .ToList();
+            FounderFullModel putModel = dataManager.GetFounderPutModel(id);
+            ViewBag.Companies = new MultiSelectList(dataManager.GetAllCompanies().Items, "Id", "Value");
             return View(putModel);
         }
 
         [HttpPost]
-        public IActionResult Update(FounderPutModel model)
+        public IActionResult Update(FounderFullModel model)
         {
             dataManager.UpdateFounder(model);
             return Redirect("/Founders");

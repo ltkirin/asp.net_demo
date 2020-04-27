@@ -24,66 +24,32 @@ namespace AspDemo.DomainModel.service.converter
             return new ListItemModel() { Value = NamesFormatingHelper.GetDisplayName(founder), Id = founder.Id };
         }
 
-        public CompanyGetModel GetModel(Company company, IList<Founder> founders)
+        public FounderFullModel GetFullModel(Founder founder, IList<Company> companies)
         {
-            CompanyGetModel model = new CompanyGetModel()
-            {
-                Title = company.Title,
-                Tin = company.Tin,
-                Id = company.Id,
-                CompanyType = (int)company.Type
-            };
-            foreach (Founder founder in founders)
-            {
-                model.Founders.Add(GetListItemModel(founder));
-            }
-            return model;
-        }
-
-        public FounderGetModel GetModel(Founder founder, IList<Company> companies)
-        {
-            FounderGetModel model = new FounderGetModel()
-            {
-                FirstName = founder.FirstName,
-                LastName = founder.LastName,
-                MiddleName = founder.MiddleName ?? string.Empty,
-                Tin = founder.Tin,
-                Id = founder.Id
-            };
-            foreach (Company company in companies)
-            {
-                model.Companies.Add(GetListItemModel(company));
-            }
-
-            return model;
-        }
-
-        public FounderPutModel GetPutModel(Founder founder, IList<Company> companies)
-        {
-            return new FounderPutModel()
+            return new FounderFullModel()
             {
                 Id = founder.Id,
                 FirstName = founder.FirstName,
                 LastName = founder.LastName,
                 MiddleName = founder.MiddleName ?? string.Empty,
                 Tin = founder.Tin,
-                Companies = companies.Select(c => GetListItemModel(c)).ToList()
+                CompaniesIds = companies.Select(c => c.Id).ToList()
             };
         }
 
-        public CompanyPutModel GetPutModel(Company company, IList<Founder> founders)
+        public CompanyFullModel GetFullModel(Company company, IList<Founder> founders)
         {
-            return new CompanyPutModel()
+            return new CompanyFullModel()
             {
                 Id = company.Id,
                 Title = company.Title,
                 Tin = company.Tin,
                 CompanyType = (int)company.Type,
-                Founders = founders.Select(c => GetListItemModel(c)).ToList()
+                FoundersIds = founders.Select(c => c.Id).ToList()
             };
         }
 
-        public FounderDto GetDto(FounderPutModel model)
+        public FounderDto GetDto(FounderFullModel model)
         {
             return new FounderDto()
             {
@@ -92,22 +58,11 @@ namespace AspDemo.DomainModel.service.converter
                 LastName = model.LastName,
                 MiddleName = model.MiddleName ?? string.Empty,
                 Tin = model.Tin,
-                RelatedCompaniesIds = model.Companies.Select(i => i.Id ).ToArray()
+                RelatedCompaniesIds = model.CompaniesIds
             };
         }
 
-        public FounderDto GetDto(FounderPostModel model)
-        {
-            return new FounderDto()
-            {
-                FirstName = model.FirstName,
-                LastName = model.LastName,
-                MiddleName = model.MiddleName ?? string.Empty,
-                Tin = model.Tin
-            };
-        }
-
-        public CompanyDto GetDto(CompanyPutModel model)
+        public CompanyDto GetDto(CompanyFullModel model)
         {
             return new CompanyDto()
             {
@@ -115,18 +70,9 @@ namespace AspDemo.DomainModel.service.converter
                 Tin = model.Tin,
                 Title = model.Title,
                 CompanyType = (CompanyType)model.CompanyType,
-                FoundersIds = model.Founders.Select(i => i.Id).ToArray()
+                FoundersIds = model.FoundersIds
             };
         }
 
-        public CompanyDto GetDto(CompanyPostModel model)
-        {
-            return new CompanyDto()
-            {
-                Tin = model.Tin,
-                Title = model.Title,
-                CompanyType = (CompanyType)model.CompanyType,
-            };
-        }
     }
 }

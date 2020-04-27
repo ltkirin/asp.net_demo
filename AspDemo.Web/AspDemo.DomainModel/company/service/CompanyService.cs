@@ -25,6 +25,11 @@ namespace AspDemo.DomainModel.company.service
             Company company = new Company();
             UpdateCompanyInfo(company, dto);
             PerformCreate(company);
+            foreach (Guid id in dto.FoundersIds)
+            {
+                PerformCreate(new FounderToCompany(company, GetById<Founder>(id)));
+            }
+            context.SaveChanges();
             context.SaveChanges();
         }
 
@@ -116,17 +121,16 @@ namespace AspDemo.DomainModel.company.service
                 .Where(r => r.Company == company && !r.IsDeleted);
             foreach (FounderToCompany relation in exitingRelations)
             {
-                if (!dto.FoundersIds.Contains(relation.Founder.Id))
+                if (!dto.FoundersIds.Contains(relation.FounderId))
                 {
                     PerformDelete(relation);
                 }
             }
             foreach (Guid founderId in dto.FoundersIds)
             {
-                if (!exitingRelations.Any(r => r.Founder.Id == founderId))
+                if (!exitingRelations.Any(r => r.FounderId == founderId))
                 {
-                    Founder founder = GetById<Founder>(founderId);
-                    PerformCreate(new FounderToCompany() { Founder = founder, Company = company });
+                    PerformCreate(new FounderToCompany(company, GetById<Founder>(founderId)));
                 }
             }
 

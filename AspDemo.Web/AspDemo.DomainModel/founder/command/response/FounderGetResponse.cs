@@ -5,6 +5,6 @@ namespace AspDemo.DomainModel.founder.command.response
 {
     public class FounderGetResponse : ResponseBase
     {
-        public FounderGetModel Model { get; set; }
+        public FounderFullModel Model { get; set; }
     }
 }

@@ -1,11 +1,13 @@
 ﻿@model List<AspDemo.DomainModel.common.model.ListItemModel>
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Учредители";
 }
 
-<h3>Учредители</h3>
+<h2>Учредители</h2>
 <div>
-    <input type="button" value="Создать" onclick="@("window.location.href='" + @Url.Action("NewFounder", "/Founders") + "'");" />
+    <form asp-action="Add">
+        <input type="submit" value="Добавить учредителя" class="btn btn-primary" />
+    </form>
 </div>
 <div>
     <lu>

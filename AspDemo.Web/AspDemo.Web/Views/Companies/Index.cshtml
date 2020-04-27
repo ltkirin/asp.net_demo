@@ -1,20 +1,26 @@
 ﻿@model IEnumerable<AspDemo.DomainModel.common.model.ListItemModel>
 
-    @{
-    ViewData["Title"] = "Index";
-    }
+@{
+    ViewData["Title"] = "Компании";
+}
 
-    <h3>Компании</h3>
-    <div>
-        <input type="button" value="Создать" onclick="@("window.location.href='" + @Url.Action("NewCompany", "/Companies") + "'");" />
-    </div>
-    <div>
-        <lu>
-            @foreach (AspDemo.DomainModel.common.model.ListItemModel item in Model)
+
+<h2>Компании</h2>
+<div>
+    <form asp-action="Add">
+        <input type="submit" value="Добавить компанию" class="btn btn-primary" />
+    </form>
+</div>
+<div>
+    <ul>
+        @foreach (AspDemo.DomainModel.common.model.ListItemModel item in Model)
         {
             <li>
                 <a href="/Companies/Edit/@item.Id">@item.Value</a>
             </li>
         }
-        </lu>
-    </div>
+    </ul>
+</div>
+
+
+

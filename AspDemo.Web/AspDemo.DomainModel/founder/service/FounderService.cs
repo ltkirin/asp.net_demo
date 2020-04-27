@@ -25,6 +25,10 @@ namespace AspDemo.DomainModel.founder.service
             Founder founder = new Founder();
             UpdateFounderInfo(founder, dto);
             PerformCreate(founder);
+            foreach (Guid id in dto.RelatedCompaniesIds)
+            {
+                PerformCreate(new FounderToCompany(GetById<Company>(id), founder));
+            }
             context.SaveChanges();
         }
 
@@ -118,20 +122,20 @@ namespace AspDemo.DomainModel.founder.service
             IEnumerable<FounderToCompany> exitingRelations = 
                 context
                 .GetDbSet<FounderToCompany>()
-                .Where(r => r.Founder == founder && !r.IsDeleted);
+                .Where(r => r.Founder == founder && !r.IsDeleted && !r.Company.IsDeleted)
+                .ToArray();
             foreach (FounderToCompany relation in exitingRelations)
             {
-                if(!dto.RelatedCompaniesIds.Contains(relation.Company.Id))
+                if(!dto.RelatedCompaniesIds.Contains(relation.CompanyId))
                 {
                     PerformDelete(relation);
                 }
             }
             foreach (Guid companyId in dto.RelatedCompaniesIds)
             {
-                if (!exitingRelations.Any(r => r.Company.Id == companyId))
+                if (!exitingRelations.Any(r => r.CompanyId == companyId))
                 {
-                    Company company = GetById<Company>(companyId);
-                    PerformCreate(new FounderToCompany() { Founder = founder, Company = company });
+                    PerformCreate(new FounderToCompany(GetById<Company>(companyId), founder));
                 }
             }
 
@@ -145,5 +149,6 @@ namespace AspDemo.DomainModel.founder.service
             founder.MiddleName = dto.MiddleName ?? string.Empty;
             founder.Tin = dto.Tin;
         }
+
     }
 }

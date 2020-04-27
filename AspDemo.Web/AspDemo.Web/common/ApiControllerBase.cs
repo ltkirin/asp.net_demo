@@ -9,9 +9,9 @@ namespace AspDemo.Web.common
 	public class ApiControllerBase : ControllerBase
     {
 
-		protected readonly DataManager dataManager;
+		protected readonly DataProvider dataManager;
 
-		public ApiControllerBase(DataManager dataManager)
+		public ApiControllerBase(DataProvider dataManager)
 		{
 			this.dataManager = dataManager;
 		}

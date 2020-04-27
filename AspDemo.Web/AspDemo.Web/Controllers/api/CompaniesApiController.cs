@@ -12,7 +12,7 @@ namespace AspDemo.Web.Controllers.api
     [ApiController]
     public class CompaniesApiController : ApiControllerBase
     {
-        public CompaniesApiController(DataManager dataManager) : base(dataManager)
+        public CompaniesApiController(DataProvider dataProvider) : base(dataProvider)
         {
         }
 

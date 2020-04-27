@@ -5,9 +5,9 @@ namespace AspDemo.Web.common
 {
     public class BaseController : Controller
     {
-        protected readonly DataManager dataManager;
+        protected readonly DataProvider dataManager;
 
-        public BaseController(DataManager dataManager)
+        public BaseController(DataProvider dataManager)
         {
             this.dataManager = dataManager;
         }

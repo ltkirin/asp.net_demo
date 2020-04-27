@@ -1,12 +1,19 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Тестовое задание";
 }
 
-    <div class="text-center">
-        <h1 class="display-4">Welcome</h1>
-        <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-        <input type="button" value="Учредители" onclick="@("window.location.href='" + @Url.Action("Index", "Founders") + "'");" />
-        <input type="button" value="Компании" onclick="@("window.location.href='" + @Url.Action("Index", "Companies") + "'");" />
-
-    </div>
+<div class="text-center">
+    <h4 class="display-4">Козловский. С.Е. - Тестовое задание</h4>
+    <ul style="list-style-type:none">
+        <li>
+            <a href="/Founders">Учредители</a>
+        </li>
+        <li>
+            <a href="/Companies">Компании</a>
+        </li>
+        <li>
+            <a href="/swagger">Перейти в Swagger</a>
+        </li>
+    </ul>
+</div>
 

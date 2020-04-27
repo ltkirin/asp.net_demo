@@ -15,13 +15,13 @@ using System.Collections.Generic;
 
 namespace AspDemo.DomainModel.service
 {
-    public class DataManager
+    public class DataProvider
     {
         private readonly IEntityService<Company> companyService;
         private readonly IEntityService<Founder> founderService;
         private readonly EntityConverter entityConverter;
 
-        public DataManager(IEntityService<Company> companyService, 
+        public DataProvider(IEntityService<Company> companyService, 
             IEntityService<Founder> founderService, EntityConverter entityConverter)
         {
             this.companyService = companyService;
@@ -29,19 +29,19 @@ namespace AspDemo.DomainModel.service
             this.entityConverter = entityConverter;
         }
 
-        public ResponseBase CreateCompany(CompanyPostModel model)
+        public ResponseBase CreateCompany(CompanyFullModel model)
         {
             companyService.Create(entityConverter.GetDto(model));
             return new ResponseBase();
         }
 
-        public ResponseBase CreateFounder(FounderPostModel model)
+        public ResponseBase CreateFounder(FounderFullModel model)
         {
             founderService.Create(entityConverter.GetDto(model));
             return new ResponseBase();
         }
 
-        public ListGetResponse GetAllCompanies(bool deleted, int pageNumber, int pageSize)
+        public ListGetResponse GetAllCompanies(bool deleted = false, int pageNumber = 1, int pageSize=1000)
         {
             ListGetResponse response = new ListGetResponse();
             IList<Company> companies = companyService.GetAll(deleted, pageNumber, pageSize);
@@ -52,7 +52,7 @@ namespace AspDemo.DomainModel.service
             return response;
         }
 
-        public ListGetResponse GetAllFounders(bool deleted, int pageNumber, int pageSize)
+        public ListGetResponse GetAllFounders(bool deleted = false, int pageNumber = 1, int pageSize = 1000)
         {
             ListGetResponse response = new ListGetResponse();
             IList<Founder> founders = founderService.GetAll(deleted, pageNumber, pageSize);
@@ -73,7 +73,7 @@ namespace AspDemo.DomainModel.service
                 });
             return new CompanyGetResponse()
             {
-                Model = entityConverter.GetModel(company, founders)
+                Model = entityConverter.GetFullModel(company, founders)
             };
         }
 
@@ -87,7 +87,7 @@ namespace AspDemo.DomainModel.service
                 });
             return new FounderGetResponse()
             {
-                Model = entityConverter.GetModel(founder, companies)
+                Model = entityConverter.GetFullModel(founder, companies)
             };
         }
 
@@ -154,7 +154,7 @@ namespace AspDemo.DomainModel.service
             return response;
         }
 
-        public FounderPutModel GetFounderPutModel(Guid id)
+        public FounderFullModel GetFounderPutModel(Guid id)
         {
             Founder founder = founderService.FindById(id);
             IList<Company> companies = companyService.Search(
@@ -162,10 +162,10 @@ namespace AspDemo.DomainModel.service
                 {
                     FounderId = founder.Id
                 });
-            return entityConverter.GetPutModel(founder, companies);
+            return entityConverter.GetFullModel(founder, companies);
         }
 
-        public CompanyPutModel GetCompanyPutModel(Guid id)
+        public CompanyFullModel GetCompanyPutModel(Guid id)
         {
             Company company = companyService.FindById(id);
             IList<Founder> founders = founderService.Search(
@@ -173,16 +173,16 @@ namespace AspDemo.DomainModel.service
                 {
                     RelatedCompanyId = company.Id
                 });
-            return entityConverter.GetPutModel(company, founders);
+            return entityConverter.GetFullModel(company, founders);
         }
 
-        public ResponseBase UpdateCompany(CompanyPutModel model)
+        public ResponseBase UpdateCompany(CompanyFullModel model)
         {
             companyService.Update(entityConverter.GetDto(model));
             return new ResponseBase();
         }
 
-        public ResponseBase UpdateFounder(FounderPutModel model)
+        public ResponseBase UpdateFounder(FounderFullModel model)
         {
             founderService.Update(entityConverter.GetDto(model));
             return new ResponseBase();

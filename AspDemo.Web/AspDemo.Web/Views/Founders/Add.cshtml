@@ -1,0 +1,58 @@
+﻿@model AspDemo.DomainModel.founder.model.FounderFullModel
+
+@{
+    ViewData["Title"] = "Новый учредитель";
+}
+
+<h4>Новый Учредитель</h4>
+<hr />
+
+<div class="col-md-4">
+    <form asp-action="Create">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+            <label asp-for="Tin" class="control-label font-weight-bold">ИНН</label>
+            <input asp-for="Tin" class="form-control" />
+            <span asp-validation-for="Tin" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="LastName" class="control-label font-weight-bold">Фамилия</label>
+            <input asp-for="LastName" class="form-control" />
+            <span asp-validation-for="LastName" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="FirstName" class="control-label font-weight-bold">Имя</label>
+            <input asp-for="FirstName" class="form-control" />
+            <span asp-validation-for="FirstName" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="MiddleName" class="control-label font-weight-bold">Отчество</label>
+            <input asp-for="MiddleName" class="form-control" />
+            <span asp-validation-for="MiddleName" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="CompaniesIds" class="control-label font-weight-bold">Является учредителем в...</label>
+            <select asp-for="CompaniesIds" asp-items="ViewBag.Companies" multiple="multiple" class="custom-select">
+            </select>
+            <span asp-validation-for="CompaniesIds" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <input type="submit" value="Создать" class="btn btn-primary" />
+        </div>
+    </form>
+
+    <form asp-action="Index">
+        <div class="form-group">
+            <input type="submit" value="Назад" class="btn btn-primary" />
+        </div>
+    </form>
+
+</div>
+
+
+

@@ -1,0 +1,62 @@
+﻿@model AspDemo.DomainModel.company.model.CompanyFullModel
+
+@{
+    ViewData["Title"] = "Новая компания";
+}
+
+<h1>Новая компания</h1>
+
+<hr />
+
+<div class="col-md-4">
+    <form asp-action="Create">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+            <label asp-for="Title" class="control-label font-weight-bold">Название</label>
+            <input asp-for="Title" class="form-control" />
+            <span asp-validation-for="Title" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Tin" class="control-label font-weight-bold">ИНН</label>
+            <input asp-for="Tin" class="form-control" />
+            <span asp-validation-for="Tin" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="CompanyType" class="control-label font-weight-bold">Тип компании</label>
+            <div class="row">
+                <input asp-for="CompanyType"
+                       type="radio"
+                       value="0"
+                       checked="checked">
+                <label class="control-label">Индивидуальный предприниматель</label>
+            </div>
+            <div class="row">
+                <input asp-for="CompanyType"
+                       type="radio"
+                       value="1" />
+                <label class="control-label">Юридическое лицо</label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="FoundersIds" class="control-label font-weight-bold">Учредители</label>
+            <select asp-for="FoundersIds" asp-items="ViewBag.Founders" multiple="multiple" class="custom-select">
+            </select>
+            <span asp-validation-for="FoundersIds" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <input type="submit" value="Создать" class="btn btn-primary" />
+        </div>
+    </form>
+
+    <form asp-action="Index">
+        <div class="form-group">
+            <input type="submit" value="Назад" class="btn btn-primary" />
+        </div>
+    </form>
+</div>
+
+
+
+

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using AspDemo.DomainModel.common.model;
 using AspDemo.DomainModel.founder.model;
@@ -30,6 +31,12 @@ namespace AspDemo.Web.Controllers
         [HttpPost]
         public IActionResult Create(FounderFullModel model)
         {
+            IList<ValidationResult> results = new List<ValidationResult>();
+            ValidationContext context = new ValidationContext(model);
+            if(!Validator.TryValidateObject(model, context, results,true))
+            {
+                return Redirect($"/Founders/Add") ;
+            }
             dataManager.CreateFounder(model);
             return Redirect("/Founders");
         }
@@ -45,6 +52,12 @@ namespace AspDemo.Web.Controllers
         [HttpPost]
         public IActionResult Update(FounderFullModel model)
         {
+            IList<ValidationResult> results = new List<ValidationResult>();
+            ValidationContext context = new ValidationContext(model);
+            if (!Validator.TryValidateObject(model, context, results, true))
+            {
+                return Redirect($"/Founders/Edit/{model.Id}");
+            }
             dataManager.UpdateFounder(model);
             return Redirect("/Founders");
         }

@@ -15,5 +15,6 @@ namespace AspDemo.DomainModel.interfaces
         TEntity FindById(Guid id);
         IList<TEntity> GetAll(bool deleted, int pageNumber, int pageSize);
         IList<TEntity> Search(SearchQueryBase<TEntity> searchQuery);
+
     }
 }

@@ -2,6 +2,7 @@
 using AspDemo.DomainModel.common.service;
 using AspDemo.DomainModel.company.command;
 using AspDemo.DomainModel.company.entity;
+using AspDemo.DomainModel.company.enums;
 using AspDemo.DomainModel.context;
 using AspDemo.DomainModel.extensions;
 using AspDemo.DomainModel.founder.entity;
@@ -15,6 +16,7 @@ namespace AspDemo.DomainModel.company.service
 {
     public class CompanyService : ServiceBase, IEntityService<Company>
     {
+        private const int TinLength = 12;
         public CompanyService(CompanyDbContext context) : base(context)
         {
         }
@@ -48,6 +50,7 @@ namespace AspDemo.DomainModel.company.service
             }
             context.SaveChanges();
         }
+
 
         public Company FindById(Guid id)
         {

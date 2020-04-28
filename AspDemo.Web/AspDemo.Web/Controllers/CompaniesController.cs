@@ -17,54 +17,61 @@ namespace AspDemo.Web.Controllers
 
         public IActionResult Index()
         {
-            return View(dataManager.GetAllCompanies(false, 1,100).Items);
+            return View(dataManager.GetAllCompanies(false, 1, 100).Items);
         }
 
         public IActionResult Add()
         {
             ViewBag.Founders = new MultiSelectList(dataManager.GetAllFounders().Items, "Id", "Value");
-            return View();
+            return View("Create", new CompanyFullModel());
         }
 
         [HttpPost]
         public IActionResult Create(CompanyFullModel model)
         {
+            ViewBag.Founders = new MultiSelectList(dataManager.GetAllFounders().Items, "Id", "Value");
             IList<ValidationResult> results = new List<ValidationResult>();
             ValidationContext context = new ValidationContext(model);
             if (!Validator.TryValidateObject(model, context, results, true))
             {
-                return Redirect($"/Companies/Add");
+                return View(model);
             }
-            dataManager.CreateCompany(model);
-            ViewBag.Founders = new MultiSelectList(dataManager.GetAllFounders().Items, "Id", "Value");
-            return Redirect("/Companies");
+            {
+                dataManager.CreateCompany(model);
+
+                return RedirectToAction("Index");
+            }
         }
 
         [HttpGet]
-        public IActionResult Edit(Guid id)
+        public IActionResult Open(Guid id)
         {
             CompanyFullModel putModel = dataManager.GetCompanyPutModel(id);
             ViewBag.Founders = new MultiSelectList(dataManager.GetAllFounders().Items, "Id", "Value");
-            return View(putModel);
+            return View("Edit",putModel);
         }
 
         [HttpPost]
-        public IActionResult Update(CompanyFullModel model)
+        public IActionResult Edit(CompanyFullModel model)
         {
+            ViewBag.Founders = new MultiSelectList(dataManager.GetAllFounders().Items, "Id", "Value");
             IList<ValidationResult> results = new List<ValidationResult>();
             ValidationContext context = new ValidationContext(model);
             if (!Validator.TryValidateObject(model, context, results, true))
             {
-                return Redirect($"/Companies/Edit/{model.Id}");
+                return View(model);
             }
-            dataManager.UpdateCompany(model);
-            return Redirect("/Companies");
+            else
+            {
+                dataManager.UpdateCompany(model);
+                return RedirectToAction("Index");
+            }
         }
 
         [HttpPost]
         public IActionResult Delete(Guid id)
         {
-             dataManager.DeleteCompany(id);
+            dataManager.DeleteCompany(id);
             return Redirect("/Companies");
         }
 
